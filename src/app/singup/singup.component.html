@@ -1,0 +1,38 @@
+<div class="container register-form mt-4 col-md-4">
+    <div class="form">
+        <div class="note">
+            <p>This is a simpleRegister Form made using Boostrap.</p>
+        </div>
+
+        <div class="form-content">
+          <form #loginForm="ngForm" (ngSubmit)="submit()" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name"  [(ngModel)]="user.name"  placeholder="Name" value="" required/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email"  [(ngModel)]="user.email"  placeholder="Email" value="" required/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password"  [(ngModel)]="user.password"  placeholder="Password" value="" required/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="confirmPass"  [(ngModel)]="confirmPass"  (input)="comparePass($event.target.value)"  placeholder="Confirm Password" value="" required/>
+                    </div>
+                    <div *ngIf="!correctPasswords" class="text-danger">
+                        <p>Las contraseñas no coinciden</p>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btnSubmit" [disabled]="!loginForm.valid || !correctPasswords">Signup</button>
+          </form>
+        </div>
+    </div>
+</div>
