@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../interfaces/user';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class SingupComponent implements OnInit {
   confirmPass: String;
   correctPasswords: boolean = true;
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -30,6 +32,15 @@ export class SingupComponent implements OnInit {
     if(this.user.password != this.confirmPass) 
       this.correctPasswords = false;
     else this.correctPasswords = true;
+  }
+
+  signup(){    
+    this.authService.signup(this.user).subscribe((data: any) => {
+      alert(data.response);
+      this.router.navigate(['signin']);
+    }, (e) =>{
+      alert('Register error, try again');
+    });
   }
 
 }

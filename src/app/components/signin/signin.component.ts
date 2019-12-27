@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User, userDataLogin } from '../../interfaces/user';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -14,7 +15,7 @@ export class SigninComponent implements OnInit {
     password: null
   };
 
-  constructor(private authservice: AuthService) { }
+  constructor(private authservice: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -23,9 +24,17 @@ export class SigninComponent implements OnInit {
     this.authservice.signin(this.user).subscribe((data: userDataLogin)=>{
       console.log(data.accessToken);
       localStorage.setItem('token', data.accessToken);
+      this.router.navigate(['profile']);
     },(e)=>{
-      alert('Login error, try again');
+      console.log(e);
+      alert(e.error.response);
+      this.cleanForm();
     });
+  }
+
+  cleanForm(){
+    this.user.email = null;
+    this.user.password = null;
   }
 
 }
